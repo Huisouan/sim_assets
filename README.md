@@ -22,7 +22,6 @@ This repository serves as a template for building projects or extensions based o
 ## Installation
 
 - Install Isaac Lab by following the [installation guide](https://isaac-sim.github.io/IsaacLab/main/source/setup/installation/index.html). We recommend using the conda installation as it simplifies calling Python scripts from the terminal.
-
 - Clone this repository separately from the Isaac Lab installation (i.e. outside the `IsaacLab` directory):
 
 ```bash
@@ -47,13 +46,6 @@ python scripts/rename_template.py your_fancy_extension_name
 ```bash
 python -m pip install -e source/sim_assets
 ```
-
-- Verify that the extension is correctly installed by running the following command:
-
-```bash
-python scripts/rsl_rl/train.py --task=Template-Isaac-Velocity-Rough-Anymal-D-v0
-```
-
 ### Set up IDE (Optional)
 
 To setup the IDE, please follow these instructions:
@@ -69,15 +61,16 @@ We provide an example UI extension that will load upon enabling your extension d
 To enable your extension, follow these steps:
 
 1. **Add the search path of your repository** to the extension manager:
-    - Navigate to the extension manager using `Window` -> `Extensions`.
-    - Click on the **Hamburger Icon** (☰), then go to `Settings`.
-    - In the `Extension Search Paths`, enter the absolute path to `IsaacLabExtensionTemplate/source`
-    - If not already present, in the `Extension Search Paths`, enter the path that leads to Isaac Lab's extension directory directory (`IsaacLab/source`)
-    - Click on the **Hamburger Icon** (☰), then click `Refresh`.
-
+   
+   - Navigate to the extension manager using `Window` -> `Extensions`.
+   - Click on the **Hamburger Icon** (☰), then go to `Settings`.
+   - In the `Extension Search Paths`, enter the absolute path to `IsaacLabExtensionTemplate/source`
+   - If not already present, in the `Extension Search Paths`, enter the path that leads to Isaac Lab's extension directory directory (`IsaacLab/source`)
+   - Click on the **Hamburger Icon** (☰), then click `Refresh`.
 2. **Search and enable your extension**:
-    - Find your extension under the `Third Party` category.
-    - Toggle it to enable your extension.
+   
+   - Find your extension under the `Third Party` category.
+   - Toggle it to enable your extension.
 
 ## Docker setup
 
@@ -196,3 +189,4 @@ Some examples of packages that can likely be excluded are:
 "<path-to-isaac-sim>/extscache/omni.services.*"     // Services tools
 ...
 ```
+
