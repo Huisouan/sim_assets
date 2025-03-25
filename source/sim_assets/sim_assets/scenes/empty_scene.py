@@ -46,8 +46,8 @@ class SceneCfg(InteractiveSceneCfg):
     # ground plane
     ground = AssetBaseCfg(prim_path="/World/defaultGroundPlane", 
         spawn=sim_utils.GroundPlaneCfg(
-            usd_path = "source/sim_assets/sim_assets/assets/usd/env/default_environment.usd"
-    ))
+            usd_path = "source/sim_assets/sim_assets/assets/usd/env/default_environment.usd")
+        )
 
     # lights
     dome_light = AssetBaseCfg(
@@ -66,7 +66,7 @@ def main():
     sim = SimulationContext(sim_cfg)
     # Set main camera
     sim.set_camera_view([2.5, 2.5, 2.5], [0.0, 0.0, 0.0])
-    scene_cfg = SceneCfg(num_envs=args_cli.num_envs, env_spacing=2.0, replicate_physics=False)
+    scene_cfg = SceneCfg(num_envs=1, env_spacing=2.0, replicate_physics=False)
     scene = InteractiveScene(scene_cfg)
     # Play the simulator
     sim.reset()
