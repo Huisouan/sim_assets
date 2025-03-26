@@ -1,12 +1,11 @@
 import isaaclab.sim as sim_utils
-from isaaclab.actuators import ActuatorNetMLPCfg, DCMotorCfg, ImplicitActuatorCfg
+from isaaclab.actuators import ActuatorNetMLPCfg, DCMotorCfg, IdealPDActuatorCfg
 from isaaclab.assets.articulation import ArticulationCfg
-from isaaclab.utils.assets import ISAACLAB_NUCLEUS_DIR
 
 
 G1_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
-        usd_path=f"{ISAACLAB_NUCLEUS_DIR}/Robots/Unitree/G1/g1.usd",
+        usd_path="/home/hsh/Code/sim_assets/source/sim_assets/sim_assets/assets/usd/bot/bot.usd",
         activate_contact_sensors=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,
@@ -40,75 +39,55 @@ G1_CFG = ArticulationCfg(
         joint_vel={".*": 0.0},
     ),
     soft_joint_pos_limit_factor=0.9,
-    actuators={
-        "legs": ImplicitActuatorCfg(
-            joint_names_expr=[
-                ".*_hip_yaw_joint",
-                ".*_hip_roll_joint",
-                ".*_hip_pitch_joint",
-                ".*_knee_joint",
-                "torso_joint",
-            ],
-            effort_limit=300,
-            velocity_limit=100.0,
-            stiffness={
-                ".*_hip_yaw_joint": 150.0,
-                ".*_hip_roll_joint": 150.0,
-                ".*_hip_pitch_joint": 200.0,
-                ".*_knee_joint": 200.0,
-                "torso_joint": 200.0,
+
+
+    # robot
+    actuators = {
+        "legs": IdealPDActuatorCfg(
+            joint_names_expr=[".*_hip_yaw", ".*_hip_roll", ".*_hip_pitch", ".*_knee", "torso"],
+            effort_limit={
+                ".*_hip_yaw": 200.0,
+                ".*_hip_roll": 200.0,
+                ".*_hip_pitch": 200.0,
+                ".*_knee": 300.0,
+                "torso": 200.0,
             },
-            damping={
-                ".*_hip_yaw_joint": 5.0,
-                ".*_hip_roll_joint": 5.0,
-                ".*_hip_pitch_joint": 5.0,
-                ".*_knee_joint": 5.0,
-                "torso_joint": 5.0,
+            velocity_limit={
+                ".*_hip_yaw": 23.0,
+                ".*_hip_roll": 23.0,
+                ".*_hip_pitch": 23.0,
+                ".*_knee": 14.0,
+                "torso": 23.0,
             },
-            armature={
-                ".*_hip_.*": 0.01,
-                ".*_knee_joint": 0.01,
-                "torso_joint": 0.01,
-            },
+            stiffness=0,
+            damping=0,
         ),
-        "feet": ImplicitActuatorCfg(
-            effort_limit=20,
-            joint_names_expr=[".*_ankle_pitch_joint", ".*_ankle_roll_joint"],
-            stiffness=20.0,
-            damping=2.0,
-            armature=0.01,
+        "feet": IdealPDActuatorCfg(
+            joint_names_expr=[".*_ankle"],
+            effort_limit=40,
+            velocity_limit=9.0,
+            stiffness=0,
+            damping=0,
         ),
-        "arms": ImplicitActuatorCfg(
-            joint_names_expr=[
-                ".*_shoulder_pitch_joint",
-                ".*_shoulder_roll_joint",
-                ".*_shoulder_yaw_joint",
-                ".*_elbow_pitch_joint",
-                ".*_elbow_roll_joint",
-                ".*_five_joint",
-                ".*_three_joint",
-                ".*_six_joint",
-                ".*_four_joint",
-                ".*_zero_joint",
-                ".*_one_joint",
-                ".*_two_joint",
-            ],
-            effort_limit=300,
-            velocity_limit=100.0,
-            stiffness=40.0,
-            damping=10.0,
-            armature={
-                ".*_shoulder_.*": 0.01,
-                ".*_elbow_.*": 0.01,
-                ".*_five_joint": 0.001,
-                ".*_three_joint": 0.001,
-                ".*_six_joint": 0.001,
-                ".*_four_joint": 0.001,
-                ".*_zero_joint": 0.001,
-                ".*_one_joint": 0.001,
-                ".*_two_joint": 0.001,
+        "arms": IdealPDActuatorCfg(
+            joint_names_expr=[".*_shoulder_pitch", ".*_shoulder_roll", ".*_shoulder_yaw", ".*_elbow"],
+            effort_limit={
+                ".*_shoulder_pitch": 40.0,
+                ".*_shoulder_roll": 40.0,
+                ".*_shoulder_yaw": 18.0,
+                ".*_elbow": 18.0,
             },
+            velocity_limit={
+                ".*_shoulder_pitch": 9.0,
+                ".*_shoulder_roll": 9.0,
+                ".*_shoulder_yaw": 20.0,
+                ".*_elbow": 20.0,
+            },
+            stiffness=0,
+            damping=0,
         ),
-    },
+    }
+    
+    
 )
 """Configuration for the Unitree G1 Humanoid robot."""

@@ -35,12 +35,13 @@ import isaaclab.sim as sim_utils
 from isaaclab.sim import SimulationCfg, SimulationContext
 from isaaclab.scene import InteractiveScene, InteractiveSceneCfg
 from isaaclab.assets import (
+    Articulation,
     AssetBaseCfg,   
     ArticulationCfg,
     
 )
 from isaaclab.utils import Timer, configclass
-
+from sim_assets.assets.unitree_bots import G1_CFG
 @configclass
 class SceneCfg(InteractiveSceneCfg):
     # ground plane
@@ -51,17 +52,20 @@ class SceneCfg(InteractiveSceneCfg):
         prim_path="/World/Light", spawn=sim_utils.DomeLightCfg(intensity=3000.0, color=(0.75, 0.75, 0.75))
     )   
 
-    G1: ArticulationCfg = ArticulationCfg(
-        prim_path="/World/envs/env_.*/Robot",
+    G1: ArticulationCfg = G1_CFG.replace(prim_path="/World/envs/env_.*/Robot")
+    
 
-    )
 
 
 def run_simulator(sim: sim_utils.SimulationContext, scene: InteractiveScene):
+    sim_dt = sim.get_physics_dt()
+    robot: Articulation = scene["G1"]
     while simulation_app.is_running():
+        
+        #scene.write_data_to_sim()
         sim.step()
-
-
+        scene.update(sim_dt)
+        
 
 
 
@@ -73,7 +77,7 @@ def main():
     sim = SimulationContext(sim_cfg)
     # Set main camera
     sim.set_camera_view([2.5, 2.5, 2.5], [0.0, 0.0, 0.0])
-    scene_cfg = SceneCfg(num_envs=args_cli.num_envs, env_spacing=2.0, replicate_physics=False)
+    scene_cfg = SceneCfg(num_envs=1, env_spacing=2.0, replicate_physics=False)
     scene = InteractiveScene(scene_cfg)
     # Play the simulator
     sim.reset()
