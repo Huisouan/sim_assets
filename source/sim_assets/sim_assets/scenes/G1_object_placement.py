@@ -42,6 +42,12 @@ from isaaclab.assets import (
 )
 from isaaclab.utils import Timer, configclass
 from sim_assets.assets.unitree_bots import G1_CFG
+
+
+##############################################################################
+# Simulation Config
+##############################################################################
+
 @configclass
 class SceneCfg(InteractiveSceneCfg):
     # ground plane
@@ -51,9 +57,20 @@ class SceneCfg(InteractiveSceneCfg):
     dome_light = AssetBaseCfg(
         prim_path="/World/Light", spawn=sim_utils.DomeLightCfg(intensity=3000.0, color=(0.75, 0.75, 0.75))
     )   
-
+    # robot
     G1: ArticulationCfg = G1_CFG.replace(prim_path="/World/envs/env_.*/Robot")
-    
+
+
+    # objects
+    # TODO：添加桌子等可交互物品。代码参考 isaaclab/scripts/demos/multi_asset.py
+
+
+
+
+
+##############################################################################
+# Main Loop
+############################################################################## 
 
 def run_simulator(sim: sim_utils.SimulationContext, scene: InteractiveScene):
     sim_dt = sim.get_physics_dt()
