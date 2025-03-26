@@ -55,17 +55,15 @@ class SceneCfg(InteractiveSceneCfg):
     G1: ArticulationCfg = G1_CFG.replace(prim_path="/World/envs/env_.*/Robot")
     
 
-
-
 def run_simulator(sim: sim_utils.SimulationContext, scene: InteractiveScene):
     sim_dt = sim.get_physics_dt()
     robot: Articulation = scene["G1"]
     while simulation_app.is_running():
         
-        #scene.write_data_to_sim()
+        scene.write_data_to_sim()
         sim.step()
         scene.update(sim_dt)
-        
+
 
 
 
