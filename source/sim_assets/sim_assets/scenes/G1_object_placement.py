@@ -38,7 +38,6 @@ from isaaclab.assets import (
     Articulation,
     AssetBaseCfg,   
     ArticulationCfg,
-    
 )
 from isaaclab.utils import Timer, configclass
 from sim_assets.assets.unitree_bots import G1_CFG
@@ -47,7 +46,6 @@ from sim_assets.assets.unitree_bots import G1_CFG
 ##############################################################################
 # Simulation Config
 ##############################################################################
-
 @configclass
 class SceneCfg(InteractiveSceneCfg):
     # ground plane
@@ -71,7 +69,6 @@ class SceneCfg(InteractiveSceneCfg):
 ##############################################################################
 # Main Loop
 ############################################################################## 
-
 def run_simulator(sim: sim_utils.SimulationContext, scene: InteractiveScene):
     sim_dt = sim.get_physics_dt()
     robot: Articulation = scene["G1"]
@@ -82,8 +79,9 @@ def run_simulator(sim: sim_utils.SimulationContext, scene: InteractiveScene):
         scene.update(sim_dt)
 
 
-
-
+##############################################################################
+# Init
+############################################################################## 
 def main():
     """Main function."""
 
@@ -99,7 +97,6 @@ def main():
     # Now we are ready!
     print("[INFO]: Setup complete...")
     run_simulator(sim, scene)
-
 
 
 if __name__ == "__main__":
